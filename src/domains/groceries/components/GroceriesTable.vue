@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { deleteGrocery } from '../store.js'
 const { groceries } = defineProps({
   groceries: Array,
 })
@@ -9,6 +10,12 @@ const total = computed(() => {
     return sum + grocerie.price * grocerie.quantity
   }, 0)
 })
+
+const confirmDelete = (id) => {
+  if (confirm('Weet je zeker dat je deze boodschap wilt verwijderen?')) {
+    deleteGrocery(id)
+  }
+}
 </script>
 
 <template>
@@ -22,6 +29,7 @@ const total = computed(() => {
           <th>Prijs</th>
           <th>Hoeveelheid</th>
           <th>Subtotaal</th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -39,14 +47,18 @@ const total = computed(() => {
           </td>
           <td>€{{ (grocerie.price * grocerie.quantity).toFixed(2) }}</td>
           <td>
-            <div class="edit-link"><RouterLink to="/edit">Bewerk</RouterLink></div>
+            <RouterLink :to="`/edit/${grocerie.id}`"><button>Bewerk</button></RouterLink>
+          </td>
+          <td>
+            <button class="delete-button" @click="() => confirmDelete(grocerie.id)">
+              Verwijder
+            </button>
           </td>
         </tr>
         <tr>
-          <td colspan="3">
-            <strong class="total">Totaal: €{{ total.toFixed(2) }}</strong>
-          </td>
-          <td></td>
+          <td colspan="2"></td>
+          <td class="totalText"><strong>Totaal:</strong></td>
+          <td class="total" colspan="3">€{{ total.toFixed(2) }}</td>
         </tr>
       </tbody>
     </table>
@@ -65,5 +77,22 @@ const total = computed(() => {
 }
 .edit-link:hover {
   background-color: #45a049;
+}
+
+.totalText {
+  text-align: right;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
 }
 </style>

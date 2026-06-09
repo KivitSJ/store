@@ -3,8 +3,12 @@
 <template>
   <nav>
     <ul>
-      <li><RouterLink to="/">Overview</RouterLink></li>
-      <li><RouterLink to="/create">Create</RouterLink></li>
+      <li>
+        <RouterLink tag="button" to="/"><button>Overview</button></RouterLink>
+      </li>
+      <li>
+        <RouterLink tag="button" to="/create"><button>Create</button></RouterLink>
+      </li>
     </ul>
   </nav>
   <RouterView />
@@ -36,7 +40,8 @@ ul {
   text-align: center;
 }
 
-li {
+button {
+  border: none;
   width: 100px;
   padding: 0.5rem;
   border-radius: 5px;
@@ -44,7 +49,7 @@ li {
   color: white;
   font-weight: bold;
 }
-li:hover {
+button:hover {
   background-color: #45a049;
 }
 
@@ -93,12 +98,5 @@ tbody tr:hover {
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
-}
-
-.total {
-  text-align: right;
-  padding-right: 12px;
-  font-size: 18px;
-  color: #333;
 }
 </style>

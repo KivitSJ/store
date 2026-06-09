@@ -8,7 +8,20 @@ const groceries = ref([
 ])
 
 export const getAllGroceries = computed(() => groceries.value)
+export const getGroceryById = (id) => computed(() => groceries.value.find((g) => g.id === id))
 
 export const addGrocery = (grocery) => {
+  grocery.id = groceries.value[groceries.value.length - 1].id + 1
   groceries.value.push(grocery)
+}
+
+export const deleteGrocery = (id) => {
+  groceries.value = groceries.value.filter((g) => g.id !== id)
+}
+
+export const updateGrocery = (updatedGrocery) => {
+  const index = groceries.value.findIndex((g) => g.id === updatedGrocery.id)
+  if (index !== -1) {
+    groceries.value[index] = updatedGrocery
+  }
 }
